@@ -8,3 +8,10 @@
 ### Setup
 -   Run `npm install` to install all the packages and dependencies.
 -   Run `node app.js`
+
+## Technology Stack
+- NodeJS
+- Express
+- MongoDB
+- EJS templating engine
+- Bootstrap and CSS
