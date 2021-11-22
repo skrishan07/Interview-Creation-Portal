@@ -1,0 +1,56 @@
+<%- include ("partials/header") %>
+<div class="mt-5 container">
+    <p class="display-6"> Interview Information </p>
+    <hr class="my-3" style="border: 1px solid black;" >
+    <table class="table table-primary table-bordered">
+        <tbody>
+            <!-- Candidate Info -->
+            <tr>
+                <th>Candidate Name</th>
+                <td><%= interview.candidateID.name %></td>
+            </tr>
+            <tr>
+                <th>Candidate Email</th>
+                <td><%= interview.candidateID.email %></td>
+            </tr>
+            <tr>
+                <th>Candidate Phone No.</th>
+                <td><%= interview.candidateID.phone %></td>
+            </tr>
+            <tr>
+                <th>Candidate Resume</th>
+                <td><a href="<%= interview.candidateID.resume %>">Link</a></td>
+            </tr>
+
+            <!-- Interviewer Info -->
+            <tr>
+                <th>Interviewer Name</th>
+                <td><%= interview.interviewerID.name %></td>
+            </tr>
+            <tr>
+                <th>Interviewer Email</th>
+                <td><%= interview.interviewerID.email %></td>
+            </tr>
+            <tr>
+                <th>Interviewer Phone No.</th>
+                <td><%= interview.interviewerID.phone %></td>
+            </tr>
+
+            <!-- Timing -->
+            <% const d = moment(interview.Date).format('LL') %>
+            <tr>
+                <th>Start Time</th>
+                <td><%= d + ' ' + interview.startTime %></td>
+            </tr>
+            <tr>
+                <th>End Time</th>
+                <td><%= d + ' ' + interview.endTime %></td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-outline-primary" href="/interview/<%= interview._id%>/edit">Edit</a>
+    <form class="d-inline" action="/interview/<%= interview._id%>?_method=DELETE" method="POST">
+        <button class="btn btn-outline-danger m-2">Delete</button>
+    </form>
+</div>
+<%- include ("partials/footer") %>

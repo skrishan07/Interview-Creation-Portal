@@ -1,0 +1,99 @@
+<%- include ("partials/header") %>
+<div class="mt-5 container">
+    <form action="/interview/<%=interview._id%>?_method=PUT" method="post" >
+        <!-- Select Candidate -->
+        <p class="display-6"> Select Candidate </p>
+        <hr class="my-3" style="border: 1px solid black;" >
+        <table class="table table-primary table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone no.</th>
+                    <th scope="col">Resume</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% candidates.forEach((candidate)=>{ %>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <% if(interview.candidateID._id.equals(candidate._id)){ %>
+                                    <input class="form-check-input" type="radio" name="upIn[candidateID]" value="<%= candidate._id %>" checked>
+                                <% }else{ %>
+                                    <input class="form-check-input" type="radio" name="upIn[candidateID]" value="<%= candidate._id %>">
+                                <% } %>
+                            </div>
+                        </td>
+                        <td><%= candidate.name %></td>
+                        <td><%= candidate.email %></td>
+                        <td><%= candidate.phone %></td>
+                        <td><a href="<%= candidate.resume %>">Link</a></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <!-- Select Candidate -->
+        <p class="display-6 mt-5"> Select Interviewer </p>
+        <hr class="my-3" style="border: 1px solid black;" >
+        <table class="table table-primary table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone no.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% interviewers.forEach((interviewer)=>{ %>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <% if(interview.interviewerID._id.equals(interviewer._id)){ %>
+                                    <input class="form-check-input" type="radio" name="upIn[interviewerID]" value="<%= interviewer._id %>" checked>
+                                <% }else{ %>
+                                    <input class="form-check-input" type="radio" name="upIn[interviewerID]" value="<%= interviewer._id %>">
+                                <% } %>
+                            </div>
+                        </td>
+                        <td><%= interviewer.name %></td>
+                        <td><%= interviewer.email %></td>
+                        <td><%= interviewer.phone %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <!-- Select Time -->
+        <p class="display-6 mt-5 "> Select Time </p>
+        <hr class="my-3" style="border: 1px solid black;" >
+
+        <h5>Date</h5>
+        <div class="form-group">
+            <!-- <% let d = moment(interview.Date).toISOString().substr(0, 10); %> -->
+            <input class="form-control" type="date" name="upIn[Date]" value="<%= moment(interview.Date).toISOString().substr(0, 10) %>">
+        </div>
+        <div class="mt-5 d-flex">
+            <div class="form-group">
+                <h5>Start Time</h5>
+                <input class="form-control" type="time" name="upIn[startTime]" value="<%= interview.startTime %>" required/>
+            </div>
+            
+            <div class="form-group mx-5">
+                <h5>End Time</h5>
+                <input class="form-control" type="time" name="upIn[endTime]" value="<%= interview.endTime %>" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <input class="form-control visually-hidden" type="text" name="upId" value="<%= interview._id %>" >
+        </div>
+
+        <div class="form-group my-5">
+            <button class="form-control btn btn-outline-primary rounded-pill" >Update</button>
+        </div>
+    </form>
+</div>
+<%- include ("partials/footer") %>
