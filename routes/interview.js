@@ -45,7 +45,6 @@ router.post("/new", (req, res)=>{
             res.redirect("back");
             console.log(err);
         }else{
-            IId = 0;
             let x = validInterview(0, req.body.newIn, interviews, req.body.candidateId, req.body.interviewerId);
             if(x != 0){
                 if(x == 1){
@@ -57,32 +56,25 @@ router.post("/new", (req, res)=>{
                 }
                 res.redirect("/interview/new");
             }else{
-                Candidate.findById(req.body.candidateId, (err, candidate)=>{
+                Interview.create(req.body.newIn, (err, interview)=>{
                     if(err){
                         res.redirect("back");
                         console.log(err);
                     }else{
-                        Interviewer.findById(req.body.interviewerId, (err, interviewer)=>{
+                        interview.candidateID = req.body.candidateId;
+                        interview.interviewerID = req.body.interviewerId;
+                        interview.save();
+                        req.flash('success',"Interview successfully created");
+                        Candidate.findById(req.body.candidateId, (err, candidate)=>{
                             if(err){
                                 res.redirect("back");
                                 console.log(err);
                             }else{
-                                Interview.create(req.body.newIn, (err, interview)=>{
-                                    if(err){
-                                        res.redirect("back");
-                                        console.log(err);
-                                    }else{
-                                        interview.candidateID = candidate._id;
-                                        interview.interviewerID = interviewer._id;
-                                        interview.save();
-                                        req.flash('success',"Interview successfully created");
-                                        let dt = moment(interview.Date).format('LL');
-                                        mailer(candidate, interview, dt);
-                                        res.redirect("/interview");
-                                    }
-                                })
+                                let dt = moment(interview.Date).format('LL');
+                                mailer(candidate, interview, dt);
                             }
                         })
+                        res.redirect("/interview");
                     }
                 })
             }
