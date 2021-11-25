@@ -1,6 +1,6 @@
 # Interview-Creation-Portal
 
--   Follow the [link](https://intervier--portal.herokuapp.com/) for working model.
+-   Follow the [link](https://ip-interview-portal.herokuapp.com/) for working model.
 
 ## Installation
 
