@@ -31,10 +31,17 @@ app.use(flash());
 app.use((req, res, next)=>{
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
+    if(!req.session){
+        return next(new Error('Oh no Session Error'))
+    }
     next();
 })
 
-mongoose.connect("mongodb://localhost/interviewCreation", { useNewUrlParser: true , useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost/interviewCreation', {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
+	console.log('Connected to MongoDB Database!');
+}).catch(err => {
+	console.log('ERROR:', err.message);
+});
 
 seedDB();
 
